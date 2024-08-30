@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Search Results</title>
+</head>
+<body>
+    <h1>Search Results</h1>
+    <p>Query: {{ query }}</p>
+    {% if results %}
+        <ul>
+        {% for result in results %}
+            <li>
+                <h2>{{ result.title }}</h2>
+                <p>{{ result.content|truncate(200) }}</p>
+                {% if result.highlights %}
+                    <p><strong>Highlights:</strong></p>
+                    <ul>
+                    {% for field, highlights in result.highlights.items() %}
+                        <li>{{ field }}:
+                            <ul>
+                            {% for highlight in highlights %}
+                                <li>{{ highlight|safe }}</li>
+                            {% endfor %}
+                            </ul>
+                        </li>
+                    {% endfor %}
+                    </ul>
+                {% endif %}
+            </li>
+        {% endfor %}
+        </ul>
+    {% else %}
+        <p>No results found.</p>
+    {% endif %}
+</body>
+</html>
